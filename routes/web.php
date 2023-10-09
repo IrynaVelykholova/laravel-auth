@@ -34,14 +34,14 @@ Route::middleware(['auth', 'verified'])
     Route::post("/projects", [ProjectController::class, "store"])->name("projects.store");
 
     //READ
-    Route::get("/projects/index", [ProjectController::class, "index"])->name("projects.index");
+    Route::get("/projects", [ProjectController::class, "index"])->name("projects.index");
     Route::get("/projects/{project}", [ProjectController::class, "show"])->name("projects.show");
 });
 
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/admin/profile', [ProfileController::class, 'edit'])->name('admin.profile.edit');
+    Route::patch('/admin/profile', [ProfileController::class, 'update'])->name('admin.profile.update');
+    Route::delete('/admin/profile', [ProfileController::class, 'destroy'])->name('admin.profile.destroy');
 });
 
 require __DIR__.'/auth.php';

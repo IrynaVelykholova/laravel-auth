@@ -1,1 +1,10 @@
-@import '~bootstrap/scss/bootstrap'
+@use 'bootstrap';
+
+.btn-aggiungi a {
+    text-decoration: none;
+    color: white;
+}
+
+.col-4 a {
+    text-decoration: none;
+}

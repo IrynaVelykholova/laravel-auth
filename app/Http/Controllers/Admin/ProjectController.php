@@ -10,20 +10,19 @@ class ProjectController extends Controller
 {
     public function index() {
         $projects = Project::all();
-        return view('index', ['dati' => $projects]);
+        return view('admin.projects.index', ['projects' => $projects]);
     }
 
     public function show($id) {
         $project = Project::findOrFail($id);
-        return view('show', ['project' => $project]);
+        return view('admin.projects.show', ['project' => $project]);
     }
 
     public function create() {
-        return view('create');
+        return view('admin.projects.create');
     }
 
     public function store(Request $request) {
-        //////con il validate
         $data = $request->validate([
             "title"=>["required","string","max:200"],
             "description"=>["required","string","max:255"],
