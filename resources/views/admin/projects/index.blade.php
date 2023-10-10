@@ -9,7 +9,7 @@
         <div class="row">
             @foreach ($projects as $project)
                 <div class="col-4">
-                    <a href="{{ route('admin.projects.show', $project->id)}}">
+                    <a href="{{ route('admin.projects.show', $project->slug)}}">
                         <div class="card">
                             <h3>{{ $project->title }}</h3>
                             <img src="{{ $project->image }}" alt="">
