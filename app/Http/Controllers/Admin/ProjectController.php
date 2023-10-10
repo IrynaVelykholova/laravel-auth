@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Requests\ProjectStoreRequest;
 use App\Models\Project;
 use Illuminate\Support\Str;
 
@@ -23,12 +24,8 @@ class ProjectController extends Controller
         return view('admin.projects.create');
     }
 
-    public function store(Request $request) {
-        $data = $request->validate([
-            "title"=>["required","string","max:100"],
-            "description"=>["required","string","max:255"],
-            "image"=>["nullable","string"],
-        ]);
+    public function store(ProjectStoreRequest $request) {
+        $data = $request->validated();
 
         //funzione dello slug
         $contatore = 0;
