@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
-class ProjectStoreRequest extends FormRequest
+class ProjectUpsertRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +24,16 @@ class ProjectStoreRequest extends FormRequest
         return [
             "title"=>["required","string","max:100"],
             "description"=>["required","string","max:255"],
-            "image"=>["nullable","string"],
+            "image"=>["required","string"],
+        ];
+    }
+
+    public function messages(): array {
+        return [
+            'title.required' => 'Inserisci il titolo.',
+            'title.max' => 'Titolo troppo lungo.',
+            'description.required' => 'Inserisci una descrizione.',
+            'image.required' => 'Inserisci un\' immagine.',
         ];
     }
 }
