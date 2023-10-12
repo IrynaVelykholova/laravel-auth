@@ -5,7 +5,7 @@
 <div class="container">
     <h1>Modifica il progetto</h1>
 
-    <form action="{{ route('admin.projects.update', $project->slug) }}" method="POST">
+    <form action="{{ route('admin.projects.update', $project->slug) }}" method="POST" enctype="multipart/form-data">
         @csrf()
         @method('put')
 
@@ -19,7 +19,9 @@
 
         {{-- immagine --}}
         <div class="mb-3">
-            <label class="form-label">Immagine</label><input type="text" class="form-control @error('image') is-invalid @enderror" name="image" value="{{ old('image', $project->image) }}">
+            <label class="form-label">Immagine</label>
+            <img src={{ asset('storage/' . $project->image) }} alt="" class="img-thumbnail" style="width: 200px">
+            <input type="file" accept="image/*" class="form-control @error('image') is-invalid @enderror" name="image">
             @error('image')
                     <div class="invalid-feedback">{{ $message }}</div>
             @enderror

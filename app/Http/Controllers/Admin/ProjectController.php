@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\ProjectUpsertRequest;
 use App\Models\Project;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 
 class ProjectController extends Controller
 {
@@ -29,6 +30,8 @@ class ProjectController extends Controller
 
         $data["slug"] = $this->generateSlug($data["title"]); //invoco funzione della creazione slug
 
+        $data['image'] = Storage::put("projects", $data["image"]);
+
         
         $project = Project::create($data); //fill e save
         return redirect()->route('admin.projects.show', $project->slug);
@@ -48,6 +51,16 @@ class ProjectController extends Controller
             $data["slug"] = $this->generateSlug($data["title"]); //crea nuovo slug
         }
 
+        if (isset($data["image"])) {
+            if ($project->image) {
+                Storage::delete($project->image); //cancello dallo storage l'immagine che c'era prima della modifica
+            }
+            //salvo file nel sistema
+            $image_percorso = Storage::put("projects", $data["image"]);
+            $data['image'] = $image_percorso;
+        }
+    
+
         $project -> update($data);// fill + save
 
         return redirect()->route('admin.projects.show',$project->slug); //mando il mio utende alla pagina dello show del comic
@@ -55,6 +68,10 @@ class ProjectController extends Controller
 
     public function destroy($slug) {
         $project = Project::where("slug", $slug)->firstOrFail();
+
+        if ($project->image) {
+            Storage::delete($project->image); //cancello dallo storage l'immagine
+        }
         $project->delete();
         
         return redirect()->route('admin.projects.index');

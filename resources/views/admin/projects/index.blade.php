@@ -12,7 +12,7 @@
                     <a href="{{ route('admin.projects.show', $project->slug)}}">
                         <div class="card">
                             <h3>{{ $project->title }}</h3>
-                            <img src="{{ $project->image }}" alt="">
+                            <img src={{ asset('storage/' . $project->image) }} alt="">
                         </div>
                     </a>
                 </div>
